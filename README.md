@@ -6,11 +6,10 @@ Bishop is a simple IRC-bot with a HTTP-interface on top and build with [Cinch](h
 
 Lets get down to business:
 
-```$ git clone git://github.com/ta/bishop.git
-$ cd bishop
-$ bundle install
-$ BISHOP_API_KEY=<key> BISHOP_SERVER=<server> BISHOP_CHANNEL=<hannel> bundle exec unicorn
-```
+    $ git clone git://github.com/ta/bishop.git
+    $ cd bishop
+    $ bundle install
+    $ BISHOP_API_KEY=<key> BISHOP_SERVER=<server> BISHOP_CHANNEL=<hannel> bundle exec unicorn
 
 Configuration is done using these environment variables:
 
@@ -34,35 +33,35 @@ In the spirit of getting down to business (Of course you need to replace host an
 
 ### Start bot
 
-`curl -d "apikey=<key>" "http://localhost:8080/start"`
+    curl -d "apikey=<key>" "http://localhost:8080/start"
 
 ### Stop bot
 
-`curl -d "apikey=<key>" "http://localhost:8080/stop"`
+    curl -d "apikey=<key>" "http://localhost:8080/stop"
 
 ### Join channel
 
-`curl -d "apikey=<key>&channel=<channel>&password=<password>" "http://localhost:8080/join"`
+    curl -d "apikey=<key>&channel=<channel>&password=<password>" "http://localhost:8080/join"
 
 ### Part channel
 
-`curl -d "apikey=<key>&channel=<channel>&reason=<reason>" "http://localhost:8080/part"`
+    curl -d "apikey=<key>&channel=<channel>&reason=<reason>" "http://localhost:8080/part"
 
 ### Action
 
-`curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>" "http://localhost:8080/action"`
+    curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>" "http://localhost:8080/action"
 
 ### Notice
 
-`curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>" "http://localhost:8080/notice"`
+    curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>" "http://localhost:8080/notice"
 
 ### Message
 
-`curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>&nick=<nick>" "http://localhost:8080/message"`
+    curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>&nick=<nick>" "http://localhost:8080/message"
 
 ### Ping
 
-`curl "http://localhost:8080/ping"`
+    curl "http://localhost:8080/ping"
 
 # Todo
 
