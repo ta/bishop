@@ -2,7 +2,7 @@
 
 Bishop is a simple IRC-bot with a HTTP-interface on top and build with [Cinch](https://github.com/cinchrb/cinch) and [Sinatra](https://github.com/sinatra/sinatra).
 
-# Install and configuration
+# Install and configure
 
 Lets get down to business:
 
@@ -19,7 +19,7 @@ Configuration is done using these environment variables:
 * BISHOP_PORT - The port to connect to - use this if the server uses some non-standard port
 * BISHOP_SSL_USE - If server uses SSL encryption, default is no
 * BISHOP_SSL_VERIFY - If bishop should verify the SSL certificate, default is no
-* BISHOP_LOG_VERBOSE - Log all requests and not just errors
+* BISHOP_LOG_VERBOSE - Log all requests and not just errors, default is no
 
 ### Heroku
 
@@ -69,7 +69,7 @@ Open for suggestions
 
 # Licence
 
-Copyright (c) 2010 Tonni Aagesen
+Copyright (c) 2012 Tonni Aagesen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
