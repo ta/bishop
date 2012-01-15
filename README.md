@@ -9,23 +9,30 @@ Lets get down to business:
     $ git clone git://github.com/ta/bishop.git
     $ cd bishop
     $ bundle install
-    $ BISHOP_API_KEY=<key> BISHOP_SERVER=<server> BISHOP_CHANNEL=<hannel> bundle exec unicorn
+    $ BISHOP_API_KEY=<key> BISHOP_SERVER=<server> BISHOP_CHANNELS=<hannel(s)> bundle exec unicorn
 
 Configuration is done using these environment variables:
 
 * BISHOP_API_KEY - The secret key to to be used in the HTTP interface
 * BISHOP_SERVER - The server name
 * BISHOP_CHANNELS - A comma-separated list of channels bishop should join
-* BISHOP_PORT - The port to connect to - use this if the server uses some non-standard port
+* BISHOP_PORT - The port to connect to, default is 6667 (or 6697 if BISHOP_SSL_USE is set)
 * BISHOP_SSL_USE - If server uses SSL encryption, default is no
 * BISHOP_SSL_VERIFY - If bishop should verify the SSL certificate, default is no
 * BISHOP_LOG_VERBOSE - Log all requests and not just errors, default is no
 
 ### Heroku
 
-This piece of software is easily used on the Heroku platform. It includes a Procfile so its just a matter of creating an App at Heroku, set the proper environment variables and deploy the code.
+This project is easily deployed to and used on the Heroku platform. It even includes a Procfile for their Cedar stack so its just a matter of creating an App at Heroku, set the proper environment variables and deploy the code... like this:
 
-Please note that if you use Heroku's Free plan, your dyno will be put to sleep after idling for X time and bishop will disconnect from any IRC server. It will however wake up again if and when the App receives a HTTP request.
+    $ git clone git://github.com/ta/bishop.git
+    $ cd bishop
+    $ heroku apps:create <app-name> --stack cedar
+    $ heroku config:add BISHOP_API_KEY=<key> BISHOP_SERVER=<server> BISHOP_CHANNELS=<channel(s)>
+    $ git remote add heroku git@heroku.com:<app-name>.git
+    $ git push heroku master
+
+Please note that if you use Heroku's Free plan your dyno will be put to sleep after idling for X time and bishop will disconnect from any IRC server. The dyno will however wake up again if and when the App receives a HTTP request and bishop will reconnect again.
 
 # Usage
 
@@ -33,35 +40,35 @@ In the spirit of getting down to business (Of course you need to replace host an
 
 ### Start bot
 
-    curl -d "apikey=<key>" "http://localhost:8080/start"
+    $ curl -d "apikey=<key>" "http://localhost:8080/start"
 
 ### Stop bot
 
-    curl -d "apikey=<key>" "http://localhost:8080/stop"
+    $ curl -d "apikey=<key>" "http://localhost:8080/stop"
 
-### Join channel
+### Join
 
-    curl -d "apikey=<key>&channel=<channel>&password=<password>" "http://localhost:8080/join"
+    $ curl -d "apikey=<key>&channel=<channel>&password=<password>" "http://localhost:8080/join"
 
-### Part channel
+### Part
 
-    curl -d "apikey=<key>&channel=<channel>&reason=<reason>" "http://localhost:8080/part"
+    $ curl -d "apikey=<key>&channel=<channel>&reason=<reason>" "http://localhost:8080/part"
 
 ### Action
 
-    curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>" "http://localhost:8080/action"
+    $ curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>" "http://localhost:8080/action"
 
 ### Notice
 
-    curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>" "http://localhost:8080/notice"
+    $ curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>" "http://localhost:8080/notice"
 
 ### Message
 
-    curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>&nick=<nick>" "http://localhost:8080/message"
+    $ curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>&nick=<nick>" "http://localhost:8080/message"
 
 ### Ping
 
-    curl "http://localhost:8080/ping"
+    $ curl "http://localhost:8080/ping"
 
 # Todo
 
