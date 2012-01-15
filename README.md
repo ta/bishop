@@ -21,7 +21,22 @@ Configuration is done using these environment variables:
 * BISHOP_SSL_VERIFY - If bishop should verify the SSL certificate, default is no
 * BISHOP_LOG_VERBOSE - Log all requests and not just errors, default is no
 
-### Heroku
+### Github Post-Receive Hooks
+
+Bishop supports [Github's Post-Receive Hooks](http://help.github.com/post-receive-hooks/) feature out of the box. You only have set up a few things to get these beautiful messages in your IRC client:
+
+    [22:00:55] -bishop- [github] http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59 committed by chris@ozmm.org with message: okay i give in
+    [22:00:56] -bishop- [github] http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0 committed by chris@ozmm.org with message: update pricing a tad
+
+Use the following Post-Receive URL:
+
+    http(s)://<your-site>/hooks/github/<BISHOP_API_KEY>
+
+Configuration is done using these environment variables:
+
+* BISHOP_GITHUB_HOOK_CHANNELS - A comma-separated list of channels bishop should post github push messages
+
+### Heroku deployment
 
 This project is easily deployed to and used on the Heroku platform. It even includes a Procfile for their Cedar stack so its just a matter of creating an App at Heroku, set the proper environment variables and deploy the code... like this:
 
