@@ -4,7 +4,7 @@ class Commands
 
   match "!about", :method => :about
   def about(m)
-    m.reply "#{m.user.nick}: I'm Bishop - an android build and designed to give you some (ir)relevant information."
+    m.reply "#{m.user.nick}: I'm Bishop - an android build and designed to give you some (ir)relevant information. Also... see https://github.com/ta/bishop"
   end
   
   match "!process", :method => :process
