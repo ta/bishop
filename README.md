@@ -34,7 +34,21 @@ Use the following Post-Receive URL:
 
 Configuration is done using these environment variables:
 
-* BISHOP_GITHUB_HOOK_CHANNELS - A comma-separated list of channels bishop should post github push messages
+* BISHOP_GITHUB_HOOK_CHANNELS - A comma-separated list of channels where bishop should post github push messages
+
+### Heroku HTTP Post Hook on deploy
+
+Bishop supports [Heroku's HTTP Post Hook on deploy](http://devcenter.heroku.com/articles/deploy-hooks#http_post_hook) feature out of the box. You only have set up a few things to get these pretty messages in your IRC client:
+
+    [22:00:55] -bishop- <your app> (rev. f6b11a090f) deployed by <your@email.tld>
+
+Use the following URL:
+
+    http(s)://<your-site>/hooks/heroku/<BISHOP_API_KEY>
+
+Configuration is done using these environment variables:
+
+* BISHOP_HEROKU_HOOK_CHANNELS - A comma-separated list of channels where bishop should post deploy messages
 
 ### Heroku deployment
 
