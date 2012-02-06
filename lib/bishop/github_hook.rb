@@ -1,6 +1,7 @@
 # -*- mode: ruby; tab-width: 2; indent-tabs-mode: nil; -*-
 require "uri"
 require "json"
+require 'net/http'
 
 module Bishop
   # see http://help.github.com/post-receive-hooks/
@@ -18,6 +19,8 @@ module Bishop
           # The .join(",").split(",") give us a simple array to work with
           Bishop::Bot.instance.channels.join(",").split(",").each do |channel|
             if (channels.index(channel))
+              response = Net::HTTP.post_form(URI.parse("http://git.io/"), "url" => commit["url"])
+              commit["url"] = Net::HTTPSuccess === response  ? response["Location"] : commit["url"]
               Bishop::Bot.instance.safe_notice channel, "[#{payload["repository"]["name"]}] #{commit["url"]} committed by #{commit["author"]["email"]} with message: #{commit["message"]}"
             end
           end
