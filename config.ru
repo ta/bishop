@@ -21,6 +21,11 @@ map "/hooks/github" do
   run Bishop::GithubHook.new
 end
 
+require "lib/bishop/heroku_hook"
+map "/hooks/heroku" do
+  run Bishop::HerokuHook.new
+end
+
 require "lib/bishop/web_manager"
 map "/" do
   run Bishop::WebManager.new
