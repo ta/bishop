@@ -21,6 +21,11 @@ Configuration is done using these environment variables:
 * BISHOP_SSL_VERIFY - If bishop should verify the SSL certificate, default is no
 * BISHOP_LOG_VERBOSE - Log all requests and not just errors, default is no
 
+These extra variables are available for feature-specific configuration - see the description of these features to find out more:
+
+* BISHOP_GITHUB_HOOK_CHANNELS - A comma-separated list of channels where bishop should post github push messages
+* BISHOP_HEROKU_HOOK_CHANNELS - A comma-separated list of channels where bishop should post heroku deploy messages
+
 ### Github Post-Receive Hooks
 
 Bishop supports [Github's Post-Receive Hooks](http://help.github.com/post-receive-hooks/) feature out of the box. You only have set up a few things to get these beautiful messages in your IRC client:
@@ -48,7 +53,7 @@ Use the following URL:
 
 Configuration is done using these environment variables:
 
-* BISHOP_HEROKU_HOOK_CHANNELS - A comma-separated list of channels where bishop should post deploy messages
+* BISHOP_HEROKU_HOOK_CHANNELS - A comma-separated list of channels where bishop should post heroku deploy messages
 
 ### Heroku deployment
 
