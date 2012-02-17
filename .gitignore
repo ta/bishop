@@ -1,4 +1,3 @@
 .bundle/*
 tmp/*
-heroku-hack.rb
 start_test.sh
