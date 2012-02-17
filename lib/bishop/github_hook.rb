@@ -10,7 +10,7 @@ module Bishop
     post "/#{ENV["BISHOP_API_KEY"]}" do
 
       if ENV["BISHOP_GITHUB_HOOK_CHANNELS"]
-        payload   = JSON.parse(URI.unescape(params["payload"]))
+        payload  = JSON.parse(URI.unescape(params["payload"]))
         channels = ENV["BISHOP_GITHUB_HOOK_CHANNELS"].split(",")
         
         payload["commits"].each do |commit|
@@ -19,7 +19,7 @@ module Bishop
           # The .join(",").split(",") give us a simple array to work with
           Bishop::Bot.instance.channels.join(",").split(",").each do |channel|
             if (channels.index(channel))
-              response = Net::HTTP.post_form(URI.parse("http://git.io/"), "url" => commit["url"])
+              response      = Net::HTTP.post_form(URI.parse("http://git.io/"), "url" => commit["url"])
               commit["url"] = Net::HTTPSuccess === response  ? response["Location"] : commit["url"]
               Bishop::Bot.instance.safe_notice channel, "[#{payload["repository"]["name"]}] #{commit["url"]} committed by #{commit["author"]["email"]} with message: #{commit["message"]}"
             end
