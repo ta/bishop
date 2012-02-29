@@ -55,6 +55,22 @@ Configuration is done using these environment variables:
 
 * BISHOP_HEROKU_HOOK_CHANNELS - A comma-separated list of channels where bishop should post heroku deploy messages
 
+### Redmine Post-Action Hooks
+
+Bishop supports the [Redmine Post-Action Hooks](https://github.com/ta/redmine_post_action_hooks) plugin for Redmine out of the box. You only have set up a few things to get these beautiful messages in your IRC client:
+
+    [22:00:55] -bishop- [API] ta updated issue "Test Issue" - https://domain.tld/issues/n
+    # or if assigned to (but not updated by) another user
+    [22:00:55] bishop: looser: [API] ta updated issue "Test Issue" - https://domain.tld/issues/n
+
+Use the following url:
+
+    http(s)://<your-site>/hooks/redmine/<BISHOP_API_KEY>
+
+Configuration is done using these environment variables:
+
+* BISHOP_REDMINE_HOOK_CHANNELS - A comma-separated list of channels where bishop should post redmine action messages
+
 ### Heroku deployment
 
 This project is easily deployed to and used on the Heroku platform. It even includes a Procfile for their Cedar stack so its just a matter of creating an App at Heroku, set the proper environment variables and deploy the code... like this:
