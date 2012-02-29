@@ -13,6 +13,8 @@ require "lib/bishop"
 # BISHOP_API_KEY
 
 # BISHOP_GITHUB_HOOK_CHANNELS
+# BISHOP_HEROKU_HOOK_CHANNELS
+# BISHOP_REDMINE_HOOK_CHANNELS
 
 Bishop::Bot.start if !!ENV["BISHOP_SERVER"] && !!ENV["BISHOP_CHANNELS"]
 
@@ -24,6 +26,11 @@ end
 require "lib/bishop/heroku_hook"
 map "/hooks/heroku" do
   run Bishop::HerokuHook.new
+end
+
+require "lib/bishop/redmine_hook"
+map "/hooks/redmine" do
+  run Bishop::RedmineHook.new
 end
 
 require "lib/bishop/web_manager"
