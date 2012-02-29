@@ -25,6 +25,7 @@ These extra variables are available for feature-specific configuration - see the
 
 * BISHOP_GITHUB_HOOK_CHANNELS - A comma-separated list of channels where bishop should post github push messages
 * BISHOP_HEROKU_HOOK_CHANNELS - A comma-separated list of channels where bishop should post heroku deploy messages
+* BISHOP_REDMINE_HOOK_CHANNELS - A comma-separated list of channels where bishop should post redmine action messages
 
 ### Github Post-Receive Hooks
 
@@ -45,7 +46,7 @@ Configuration is done using these environment variables:
 
 Bishop supports [Heroku's HTTP Post Hook on deploy](http://devcenter.heroku.com/articles/deploy-hooks#http_post_hook) feature out of the box. You only have set up a few things to get these pretty messages in your IRC client:
 
-    [22:00:55] -bishop- <your app> (rev. f6b11a090f) deployed by <your@email.tld>
+    [22:00:55] -bishop- [your app] Rev. f6b11a090f deployed by your@email.tld
 
 Use the following URL:
 
@@ -59,9 +60,9 @@ Configuration is done using these environment variables:
 
 Bishop supports the [Redmine Post-Action Hooks](https://github.com/ta/redmine_post_action_hooks) plugin for Redmine out of the box. You only have set up a few things to get these beautiful messages in your IRC client:
 
-    [22:00:55] -bishop- [API] ta updated issue "Test Issue" - https://domain.tld/issues/n
+    [22:00:55] -bishop- [your project] ta updated issue "Test Issue" - https://domain.tld/issues/n
     # or if assigned to (but not updated by) another user
-    [22:00:55] bishop: looser: [API] ta updated issue "Test Issue" - https://domain.tld/issues/n
+    [22:00:55] bishop: looser: [your project] ta updated issue "Test Issue" - https://domain.tld/issues/n
 
 Use the following url:
 
