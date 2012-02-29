@@ -18,7 +18,7 @@ module Bishop
         # The .join(",").split(",") give us a simple array to work with
         Bishop::Bot.instance.channels.join(",").split(",").each do |channel|
           if (channels.index(channel))
-            msg  = case payload["event"]
+            msg = case payload["event"]
               when "controller_issues_new_after_save" then
                 "[#{payload["project"]["name"]}] #{payload["user"]["login"]} created issue \"#{payload["issue"]["subject"]}\" - #{payload["url"]}"
               when "controller_issues_edit_after_save" then
@@ -27,7 +27,7 @@ module Bishop
                 "/hooks/redmine received an unknown event: #{payload["event"]}"
             end
 
-            if assignee_id = payload["assignee"]["id"] and assignee_id != payload["user"]["id"]
+            if payload["assignee"] and payload["assignee"]["id"] != payload["user"]["id"]
               msg = "#{payload["assignee"]["login"]}: #{msg}"
               Bishop::Bot.instance.safe_msg channel, msg
             else
