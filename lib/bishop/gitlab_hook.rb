@@ -4,13 +4,13 @@ require "json"
 require 'net/http'
 
 module Bishop
-  # see https://git.pil.dk/help/web_hooks
+  # see inline help in your gitlab instance
   class GitlabHook < Bishop::Base
 
     post "/#{ENV["BISHOP_API_KEY"]}" do
 
       if ENV["BISHOP_GITLAB_HOOK_CHANNELS"]
-        payload  = JSON.parse(URI.unescape(params["payload"]))
+        payload  = JSON.parse(URI.unescape(request.body.read))
         channels = ENV["BISHOP_GITLAB_HOOK_CHANNELS"].split(",")
         
         payload["commits"].each do |commit|
