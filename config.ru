@@ -23,6 +23,11 @@ map "/hooks/github" do
   run Bishop::GithubHook.new
 end
 
+require "lib/bishop/gitlab_hook"
+map "/hooks/gitlab" do
+  run Bishop::GitlabHook.new
+end
+
 require "lib/bishop/heroku_hook"
 map "/hooks/heroku" do
   run Bishop::HerokuHook.new

@@ -42,6 +42,21 @@ Configuration is done using these environment variables:
 
 * BISHOP_GITHUB_HOOK_CHANNELS - A comma-separated list of channels where bishop should post github push messages
 
+### Gitlab Post-Receive Hooks
+
+Bishop supports Gitlab's Post-Receive Hooks (See help in your gitlab instance) feature out of the box. You only have set up a few things to get these beautiful messages in your IRC client:
+
+    [22:00:55] -bishop- [gitlab] http://git.io/-7HEiA committed by chris@ozmm.org with message: okay i give in
+    [22:00:56] -bishop- [gitlab] http://git.io/HN3GuQ committed by chris@ozmm.org with message: update pricing a tad
+
+Use the following Post-Receive URL:
+
+    http(s)://<your-site>/hooks/gitlab/<BISHOP_API_KEY>
+
+Configuration is done using these environment variables:
+
+* BISHOP_GITLAB_HOOK_CHANNELS - A comma-separated list of channels where bishop should post gitlab push messages
+
 ### Heroku HTTP Post Hook on deploy
 
 Bishop supports [Heroku's HTTP Post Hook on deploy](http://devcenter.heroku.com/articles/deploy-hooks#http_post_hook) feature out of the box. You only have set up a few things to get these pretty messages in your IRC client:
