@@ -9,7 +9,7 @@ Lets get down to business:
     $ git clone git://github.com/ta/bishop.git
     $ cd bishop
     $ bundle install
-    $ BISHOP_API_KEY=<key> BISHOP_SERVER=<server> BISHOP_CHANNELS=<hannel(s)> bundle exec unicorn
+    $ BISHOP_API_KEY=<key> BISHOP_SERVER=<server> BISHOP_CHANNELS=<channel(s)> bundle exec unicorn
 
 Configuration is done using these environment variables:
 
