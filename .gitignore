@@ -1,3 +1,4 @@
 .bundle/*
 tmp/*
+say.sh
 start_test.sh
