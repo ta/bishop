@@ -21,7 +21,7 @@ module Bishop
             if (channels.index(channel))
               response      = Net::HTTP.post_form(URI.parse("http://git.io/"), "url" => commit["url"])
               commit["url"] = Net::HTTPSuccess === response  ? response["Location"] : commit["url"]
-              Bishop::Bot.instance.safe_notice channel, "[#{payload["repository"]["name"]}] #{commit["url"]} committed by #{commit["author"]["email"]} with message: #{commit["message"]}"
+              Bishop::Bot.instance.Channel(channel).safe_notice("[#{payload["repository"]["name"]}] #{commit["url"]} committed by #{commit["author"]["email"]} with message: #{commit["message"]}")
             end
           end
         end

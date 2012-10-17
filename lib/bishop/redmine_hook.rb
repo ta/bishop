@@ -29,9 +29,9 @@ module Bishop
 
             if payload["assignee"] and payload["assignee"]["id"] != payload["user"]["id"]
               msg = "#{payload["assignee"]["login"]}: #{msg}"
-              Bishop::Bot.instance.safe_msg channel, msg
+              Bishop::Bot.instance.Channel(channel).safe_msg(msg)
             else
-              Bishop::Bot.instance.safe_notice channel, msg
+              Bishop::Bot.instance.Channel(channel).safe_notice(msg)
             end
           end
         end

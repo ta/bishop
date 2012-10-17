@@ -37,18 +37,19 @@ module Bishop
     # Message format
     # apikey=<apikey>&recipient=<channel_or_user>&text=<text>
     post "/action" do
-      Bishop::Bot.instance.safe_action(params["recipient"], params["text"])
+      Bishop::Bot.instance.Channel(params["recipient"]).safe_action(params["text"])
     end
 
     post "/notice" do
-      Bishop::Bot.instance.safe_notice(params["recipient"], params["text"])
+      #Bishop::Bot.instance.safe_notice(params["recipient"], params["text"])
+      Bishop::Bot.instance.Channel(params["recipient"]).safe_notice(params["text"])
     end
 
     # Message format
     # apikey=<apikey>&recipient=<channel_or_user>&text=<text>&nick=<nick>
     post "/message" do
       params["text"] = "#{params["nick"]}: #{params["text"]}" unless params["nick"].nil?
-      Bishop::Bot.instance.safe_msg(params["recipient"], params["text"])
+      Bishop::Bot.instance.Channel(params["recipient"]).safe_msg(params["text"])
     end
 
     get "/ping" do

@@ -40,7 +40,7 @@ module Bishop
         
         log = File.open("./tmp/bishop.log", "a")
         log.sync = true
-        bot.logger = Cinch::Logger::FormattedLogger.new(log)
+        bot.loggers << Cinch::Logger::FormattedLogger.new(log)
         
         Signal.trap("INT") do
           puts "*** bishop is shutting down (PID #{Process.pid})"

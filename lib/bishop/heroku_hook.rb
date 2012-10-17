@@ -15,7 +15,7 @@ module Bishop
         # The .join(",").split(",") give us a simple array to work with
         Bishop::Bot.instance.channels.join(",").split(",").each do |channel|
           if (channels.index(channel))
-            Bishop::Bot.instance.safe_notice channel, "[#{params["app"]}] Rev. #{params["head"]} deployed by #{params["user"]}"
+            Bishop::Bot.instance.Channel(channel).safe_notice("[#{params["app"]}] Rev. #{params["head"]} deployed by #{params["user"]}")
           end
         end        
       end

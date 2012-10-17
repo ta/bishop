@@ -2,8 +2,7 @@
 class Greetings
   include Cinch::Plugin
   
-  prefix ""
-  match "bishop!", :method => :greet
+  match "bishop!", :method => :greet, :prefix => ""
   def greet(m)
     m.reply "#{m.user.nick}!"
   end
