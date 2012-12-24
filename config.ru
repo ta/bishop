@@ -18,6 +18,11 @@ require "lib/bishop"
 
 Bishop::Bot.start if !!ENV["BISHOP_SERVER"] && !!ENV["BISHOP_CHANNELS"]
 
+require "lib/bishop/simpleci_hook"
+map "/hooks/simpleci" do
+  run Bishop::SimpleCIHook.new
+end
+
 require "lib/bishop/github_hook"
 map "/hooks/github" do
   run Bishop::GithubHook.new
