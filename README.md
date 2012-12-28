@@ -24,8 +24,61 @@ Configuration is done using these environment variables:
 These extra variables are available for feature-specific configuration - see the description of these features to find out more:
 
 * BISHOP_GITHUB_HOOK_CHANNELS - A comma-separated list of channels where bishop should post github push messages
+* BISHOP_GITLAB_HOOK_CHANNELS - A comma-separated list of channels where bishop should post gitlab push messages
 * BISHOP_HEROKU_HOOK_CHANNELS - A comma-separated list of channels where bishop should post heroku deploy messages
 * BISHOP_REDMINE_HOOK_CHANNELS - A comma-separated list of channels where bishop should post redmine action messages
+* BISHOP_SIMPLECI_HOOK_CHANNELS - A comma-separated list of channels where bishop should post SimpleCI messages
+
+### Heroku deployment
+
+Bishop is easily deployed to and used on the Heroku platform. It even includes a Procfile for their Cedar stack so its just a matter of creating an App at Heroku, set the proper environment variables and deploy the code... like so:
+
+    $ git clone git://github.com/ta/bishop.git
+    $ cd bishop
+    $ heroku apps:create <app-name> --stack cedar
+    $ heroku config:add BISHOP_API_KEY=<key> BISHOP_SERVER=<server> BISHOP_CHANNELS=<channel(s)>
+    $ git remote add heroku git@heroku.com:<app-name>.git
+    $ git push heroku master
+
+Please note that if you are using Heroku's Free plan your dyno will be put to sleep after idling for X time and bishop will disconnect from any IRC server. The dyno will however wake up again if and when the App receives a HTTP request and bishop will reconnect again.
+
+# Usage
+
+In the spirit of getting down to business (Of course you need to replace host and port to your App's host and port):
+
+### Start bot
+
+    $ curl -d "apikey=<key>" "http://localhost:8080/start"
+
+### Stop bot
+
+    $ curl -d "apikey=<key>" "http://localhost:8080/stop"
+
+### Join
+
+    $ curl -d "apikey=<key>&channel=<channel>&password=<password>" "http://localhost:8080/join"
+
+### Part
+
+    $ curl -d "apikey=<key>&channel=<channel>&reason=<reason>" "http://localhost:8080/part"
+
+### Action
+
+    $ curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>" "http://localhost:8080/action"
+
+### Notice
+
+    $ curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>" "http://localhost:8080/notice"
+
+### Message
+
+    $ curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>&nick=<nick>" "http://localhost:8080/message"
+
+### Ping
+
+    $ curl "http://localhost:8080/ping"
+
+# Hooks
 
 ### Github Post-Receive Hooks
 
@@ -87,54 +140,19 @@ Configuration is done using these environment variables:
 
 * BISHOP_REDMINE_HOOK_CHANNELS - A comma-separated list of channels where bishop should post redmine action messages
 
-### Heroku deployment
+### SimpleCI HTTP Post-Build Hook
 
-This project is easily deployed to and used on the Heroku platform. It even includes a Procfile for their Cedar stack so its just a matter of creating an App at Heroku, set the proper environment variables and deploy the code... like this:
+Bishop supports [SimpleCI's](https://github.com/ta/simpleci) Post-Build feature out of the box. You only have set up a few things to get these pretty messages in your IRC client:
 
-    $ git clone git://github.com/ta/bishop.git
-    $ cd bishop
-    $ heroku apps:create <app-name> --stack cedar
-    $ heroku config:add BISHOP_API_KEY=<key> BISHOP_SERVER=<server> BISHOP_CHANNELS=<channel(s)>
-    $ git remote add heroku git@heroku.com:<app-name>.git
-    $ git push heroku master
+    [22:00:55] -bishop- [<your project>] Build <sha> committet by <author name> failed at <time> - http://domain.tld/projects/<your project>
 
-Please note that if you use Heroku's Free plan your dyno will be put to sleep after idling for X time and bishop will disconnect from any IRC server. The dyno will however wake up again if and when the App receives a HTTP request and bishop will reconnect again.
+Use the following URL:
 
-# Usage
+    http(s)://<your-site>/hooks/simpleci/<BISHOP_API_KEY>
 
-In the spirit of getting down to business (Of course you need to replace host and port to your App's host and port):
+Configuration is done using these environment variables:
 
-### Start bot
-
-    $ curl -d "apikey=<key>" "http://localhost:8080/start"
-
-### Stop bot
-
-    $ curl -d "apikey=<key>" "http://localhost:8080/stop"
-
-### Join
-
-    $ curl -d "apikey=<key>&channel=<channel>&password=<password>" "http://localhost:8080/join"
-
-### Part
-
-    $ curl -d "apikey=<key>&channel=<channel>&reason=<reason>" "http://localhost:8080/part"
-
-### Action
-
-    $ curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>" "http://localhost:8080/action"
-
-### Notice
-
-    $ curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>" "http://localhost:8080/notice"
-
-### Message
-
-    $ curl -d "apikey=<apikey>&recipient=<channel_or_user>&text=<text>&nick=<nick>" "http://localhost:8080/message"
-
-### Ping
-
-    $ curl "http://localhost:8080/ping"
+* BISHOP_SIMPLECI_HOOK_CHANNELS - A comma-separated list of channels where bishop should post SimpleCI build messages
 
 # Todo
 
