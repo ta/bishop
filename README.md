@@ -78,6 +78,12 @@ In the spirit of getting down to business (Of course you need to replace host an
 
     $ curl "http://localhost:8080/ping"
 
+## Parameters
+
+Apart from the examples above Bishop accepts a "&unsafe=1" appended to the parameters in the HTTP POST request for actions, messages and notices. This will allow for non-printable characters in the *text* parameter.
+
+
+
 # Hooks
 
 ### Github Post-Receive Hooks
