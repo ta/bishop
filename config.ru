@@ -28,6 +28,11 @@ map "/hooks/github" do
   run Bishop::GithubHook.new
 end
 
+require "lib/bishop/github_pshb"
+map "/hooks/github-pshb" do
+  run Bishop::GithubPSHB.new
+end
+
 require "lib/bishop/gitlab_hook"
 map "/hooks/gitlab" do
   run Bishop::GitlabHook.new
