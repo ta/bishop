@@ -110,7 +110,7 @@ Bishop supports [Github's PubSubHubbub Hooks](http://developer.github.com/v3/rep
     [22:00:56] -bishop- [<project>] <user> commented on issue "<topic>" - https://github.com/<user>/<project>/issues/<id>
     [22:00:56] -bishop- [<project>] <user> closed issue "<topic>" - https://github.com/<user>/<project>/issues/<id>
 
-Use the following Post-Receive URL:
+Use the following URL:
 
     http(s)://<your-site>/hooks/github-pshb/<BISHOP_API_KEY>
 
