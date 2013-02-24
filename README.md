@@ -24,6 +24,7 @@ Configuration is done using these environment variables:
 These extra variables are available for feature-specific configuration - see the description of these features to find out more:
 
 * BISHOP_GITHUB_HOOK_CHANNELS - A comma-separated list of channels where bishop should post github push messages
+* BISHOP_GITHUB_PSHB_CHANNELS - A comma-separated list of channels where bishop should post github pubsubhubbub messages
 * BISHOP_GITLAB_HOOK_CHANNELS - A comma-separated list of channels where bishop should post gitlab push messages
 * BISHOP_HEROKU_HOOK_CHANNELS - A comma-separated list of channels where bishop should post heroku deploy messages
 * BISHOP_REDMINE_HOOK_CHANNELS - A comma-separated list of channels where bishop should post redmine action messages
@@ -90,8 +91,8 @@ Apart from the examples above Bishop accepts a "&unsafe=1" appended to the param
 
 Bishop supports [Github's Post-Receive Hooks](http://help.github.com/post-receive-hooks/) feature out of the box. You only have set up a few things to get these beautiful messages in your IRC client:
 
-    [22:00:55] -bishop- [github] http://git.io/-7HEiA committed by chris@ozmm.org with message: okay i give in
-    [22:00:56] -bishop- [github] http://git.io/HN3GuQ committed by chris@ozmm.org with message: update pricing a tad
+    [22:00:55] -bishop- [<project>] <commit url> committed by <user email> with message: <commit message>
+    [22:00:56] -bishop- [<project>] <commit url> committed by <user email> with message: <commit message>
 
 Use the following Post-Receive URL:
 
@@ -101,12 +102,28 @@ Configuration is done using these environment variables:
 
 * BISHOP_GITHUB_HOOK_CHANNELS - A comma-separated list of channels where bishop should post github push messages
 
+### Github PubSubHubbub Hooks
+
+Bishop supports [Github's PubSubHubbub Hooks](http://developer.github.com/v3/repos/hooks/#pubsubhubbub) feature (currently events: issues, issue_comment) out of the box. You only have set up a few things to get these beautiful messages in your IRC client:
+
+    [22:00:56] -bishop- [<project>] <user> created issue "<topic>" - https://github.com/<user>/<project>/issues/<id>
+    [22:00:56] -bishop- [<project>] <user> commented on issue "<topic>" - https://github.com/<user>/<project>/issues/<id>
+    [22:00:56] -bishop- [<project>] <user> closed issue "<topic>" - https://github.com/<user>/<project>/issues/<id>
+
+Use the following Post-Receive URL:
+
+    http(s)://<your-site>/hooks/github-pshb/<BISHOP_API_KEY>
+
+Configuration is done using these environment variables:
+
+* BISHOP_GITHUB_PSHB_CHANNELS - A comma-separated list of channels where bishop should post github push messages
+
 ### Gitlab Post-Receive Hooks
 
 Bishop supports Gitlab's Post-Receive Hooks (See help in your gitlab instance) feature out of the box. You only have set up a few things to get these beautiful messages in your IRC client:
 
-    [22:00:55] -bishop- [gitlab] http://git.io/-7HEiA committed by chris@ozmm.org with message: okay i give in
-    [22:00:56] -bishop- [gitlab] http://git.io/HN3GuQ committed by chris@ozmm.org with message: update pricing a tad
+    [22:00:55] -bishop- [<project>] <commit url> committed by <user email> with message: <commit message>
+    [22:00:56] -bishop- [<project>] <commit url> committed by <user email> with message: <commit message>
 
 Use the following Post-Receive URL:
 
@@ -120,7 +137,7 @@ Configuration is done using these environment variables:
 
 Bishop supports [Heroku's HTTP Post Hook on deploy](http://devcenter.heroku.com/articles/deploy-hooks#http_post_hook) feature out of the box. You only have set up a few things to get these pretty messages in your IRC client:
 
-    [22:00:55] -bishop- [your app] Rev. f6b11a090f deployed by your@email.tld
+    [22:00:55] -bishop- [<project>] Rev. <revision> deployed by <user email>
 
 Use the following URL:
 
@@ -134,9 +151,9 @@ Configuration is done using these environment variables:
 
 Bishop supports the [Redmine Post-Action Hooks](https://github.com/ta/redmine_post_action_hooks) plugin for Redmine out of the box. You only have set up a few things to get these beautiful messages in your IRC client:
 
-    [22:00:55] -bishop- [your project] ta updated issue "Test Issue" - https://domain.tld/issues/n
+    [22:00:55] -bishop- [<project>] <user> updated issue <topic> - <issue url>
     # or if assigned to (but not updated by) another user
-    [22:00:55] bishop: looser: [your project] ta updated issue "Test Issue" - https://domain.tld/issues/n
+    [22:00:55] bishop: <issue assignee>: [<project>] <user> updated issue <topic> - <issue url>
 
 Use the following url:
 
@@ -150,7 +167,7 @@ Configuration is done using these environment variables:
 
 Bishop supports [SimpleCI's](https://github.com/ta/simpleci) Post-Build feature out of the box. You only have set up a few things to get these pretty messages in your IRC client:
 
-    [22:00:55] -bishop- [<your project>] Build <sha> committet by <author name> failed at <time> - http://domain.tld/projects/<your project>
+    [22:00:55] -bishop- [<project>] Build <revision> committet by <author name> failed at <time> - <simplci project url>
 
 Use the following URL:
 
@@ -166,7 +183,7 @@ Open for suggestions
 
 # Licence
 
-Copyright (c) 2012 Tonni Aagesen
+Copyright (c) 2013 Tonni Aagesen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
