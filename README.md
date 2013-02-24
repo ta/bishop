@@ -114,9 +114,16 @@ Use the following URL:
 
     http(s)://<your-site>/hooks/github-pshb/<BISHOP_API_KEY>
 
+Here is an example on how to subscribe to an event:
+
+    $ curl -u "<user>" -i https://api.github.com/hub \
+    -F "hub.mode=subscribe" \
+    -F "hub.topic=https://github.com/<user>/<project>/events/issues" \
+    -F "hub.callback=http(s)://<your-site>/hooks/github-pshb/<BISHOP_API_KEY>"
+
 Configuration is done using these environment variables:
 
-* BISHOP_GITHUB_PSHB_CHANNELS - A comma-separated list of channels where bishop should post github push messages
+* BISHOP_GITHUB_PSHB_CHANNELS - A comma-separated list of channels where bishop should post github pubsubhubbub messages
 
 ### Gitlab Post-Receive Hooks
 
