@@ -14,19 +14,27 @@ module Bishop
         channels = ENV["BISHOP_GITHUB_PSHB_CHANNELS"].split(",")
         user     = false
         nick     = false
-        msg      = ""
+        msg      = []
 
         case request.env["HTTP_X_GITHUB_EVENT"]
+        when "push"
+          msg = []
+          payload["commits"].each do |commit|
+            msg << "[#{payload["repository"]["name"]}] #{commit["url"]} committed by #{commit["author"]["email"]} with message: #{commit["message"]}"
+          end
         when "issues"
           nick = payload["issue"]["assignee"]
           user = payload["issue"]["user"]["login"]
-          msg  = "[#{payload["repository"]["full_name"]}] #{user} #{payload["action"]} issue: \"#{payload["issue"]["title"]}\" - #{payload["issue"]["html_url"]}"
+          msg << "[#{payload["repository"]["full_name"]}] #{user} #{payload["action"]} issue: \"#{payload["issue"]["title"]}\" - #{payload["issue"]["html_url"]}"
         when "issue_comment"
           nick = payload["issue"]["assignee"]
           user = payload["issue"]["user"]["login"]
-          msg = "[#{payload["repository"]["full_name"]}] #{user} commented on issue: \"#{payload["issue"]["title"]}\" - #{payload["issue"]["html_url"]}"
+          msg << "[#{payload["repository"]["full_name"]}] #{user} commented on issue: \"#{payload["issue"]["title"]}\" - #{payload["issue"]["html_url"]}"
+        when pull_request
+          msg << "[#{payload["base"]["repo"]["full_name"]}] #{payload["head"]["user"]["login"]} #{payload["action"]} pull request #{payload["number"]}- #{payload["url"]}"
         else
-          msg = "[Github PubSubHubbub hook] Unhandled event: #{request.env["HTTP_X_GITHUB_EVENT"]}"
+          # TODO: commit_comment, pull_request_review_comment, gollum
+          msg << "[Github PubSubHubbub hook] Unhandled event: #{request.env["HTTP_X_GITHUB_EVENT"]}"
         end
 
         # FIXME: This hack is nessecary for a heroku hosted app to work
@@ -34,10 +42,12 @@ module Bishop
         # The .join(",").split(",") give us a simple array to work with
         Bishop::Bot.instance.channels.join(",").split(",").each do |channel|
           if (channels.index(channel))
-            if nick and nick != user
-              Bishop::Bot.instance.Channel(channel).safe_msg("#{nick}: #{msg}")
-            else
-              Bishop::Bot.instance.Channel(channel).safe_notice(msg)
+            msg.each do |m|
+              if nick and nick != user
+                Bishop::Bot.instance.Channel(channel).safe_msg("#{nick}: #{m}")
+              else
+                Bishop::Bot.instance.Channel(channel).safe_notice(m)
+              end
             end
           end
         end
