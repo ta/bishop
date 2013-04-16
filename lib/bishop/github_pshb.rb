@@ -27,7 +27,7 @@ module Bishop
         when "push"
           msg = []
           payload["commits"].each do |commit|
-            msg << "[#{payload["repository"]["name"]}] #{git_io(commit["url"])} committed by #{commit["author"]["username"]} with message: #{commit["message"]}"
+            msg << "[#{payload["repository"]["owner"]["name"]}/#{payload["repository"]["name"]}] #{git_io(commit["url"])} committed by #{commit["author"]["username"]} with message: #{commit["message"]}"
           end
         when "issues"
           nick = payload["issue"]["assignee"]
