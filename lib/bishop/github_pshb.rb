@@ -7,7 +7,7 @@ module Bishop
   # see http://developer.github.com/v3/repos/hooks/#pubsubhubbub
   class GithubPSHB < Bishop::Base
 
-    helper do
+    helpers do
       def git_io url
         response = Net::HTTP.post_form(URI.parse("http://git.io/"), "url" => url)
         Net::HTTPSuccess === response  ? response["Location"] : url
