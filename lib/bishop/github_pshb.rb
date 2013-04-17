@@ -32,11 +32,11 @@ module Bishop
         when "issues"
           nick = payload["issue"]["assignee"]["login"]
           user = payload["issue"]["user"]["login"]
-          msg << "[#{payload["repository"]["full_name"]}] #{user} #{payload["action"]} issue: \"#{payload["issue"]["title"]}\" - #{git_io(payload["issue"]["html_url"])}"
+          msg << "[#{payload["issue"]["html_url"].match(/^https:\/\/github.com\/(.+)\/issues/)[1]}] #{user} #{payload["action"]} issue: \"#{payload["issue"]["title"]}\" - #{git_io(payload["issue"]["html_url"])}"
         when "issue_comment"
           nick = payload["issue"]["assignee"]["login"]
           user = payload["issue"]["user"]["login"]
-          msg << "[#{payload["repository"]["full_name"]}] #{user} commented on issue: \"#{payload["issue"]["title"]}\" - #{git_io(payload["issue"]["html_url"])}"
+          msg << "[#{payload["issue"]["html_url"].match(/^https:\/\/github.com\/(.+)\/issues/)[1]}] #{user} commented on issue: \"#{payload["issue"]["title"]}\" - #{git_io(payload["issue"]["html_url"])}"
         when pull_request
           msg << "[#{payload["base"]["repo"]["full_name"]}] #{payload["head"]["user"]["login"]} #{payload["action"]} pull request #{payload["number"]}- #{git_io(payload["url"])}"
         else
