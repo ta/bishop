@@ -30,11 +30,11 @@ module Bishop
             msg << "[#{payload["repository"]["owner"]["name"]}/#{payload["repository"]["name"]}] #{git_io(commit["url"])} committed by #{commit["author"]["username"]} with message: #{commit["message"]}"
           end
         when "issues"
-          nick = payload["issue"]["assignee"]
+          nick = payload["issue"]["assignee"]["login"]
           user = payload["issue"]["user"]["login"]
           msg << "[#{payload["repository"]["full_name"]}] #{user} #{payload["action"]} issue: \"#{payload["issue"]["title"]}\" - #{git_io(payload["issue"]["html_url"])}"
         when "issue_comment"
-          nick = payload["issue"]["assignee"]
+          nick = payload["issue"]["assignee"]["login"]
           user = payload["issue"]["user"]["login"]
           msg << "[#{payload["repository"]["full_name"]}] #{user} commented on issue: \"#{payload["issue"]["title"]}\" - #{git_io(payload["issue"]["html_url"])}"
         when pull_request
