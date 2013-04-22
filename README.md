@@ -106,7 +106,7 @@ Configuration is done using these environment variables:
 
 Bishop supports [Github's PubSubHubbub Hooks](http://developer.github.com/v3/repos/hooks/#pubsubhubbub) feature (currently events: push, issues, issue_comment, pull_request) out of the box. You only have set up a few things to get these beautiful messages in your IRC client:
 
-    [22:00:55] -bishop- [<project>] <commit url> committed by <user> with message: <commit message>
+    [22:00:55] -bishop- [<project>] <user> pushed a commit with message: "<commit message>" - https://github.com/<user>/<project>/commit/<sha>
     [22:00:56] -bishop- [<project>] <user> created issue "<topic>" - https://github.com/<user>/<project>/issues/<id>
     [22:00:56] -bishop- [<project>] <user> commented on issue "<topic>" - https://github.com/<user>/<project>/issues/<id>
     [22:00:56] -bishop- [<project>] <user> closed issue "<topic>" - https://github.com/<user>/<project>/issues/<id>
