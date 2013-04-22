@@ -37,8 +37,8 @@ module Bishop
           nick = payload["issue"]["assignee"]["login"] if payload["issue"]["assignee"]
           user = payload["comment"]["user"]["login"]
           msg << "[#{payload["issue"]["html_url"].match(/^https:\/\/github.com\/(.+)\/issues/)[1]}] #{user} commented on issue: \"#{payload["issue"]["title"]}\" - #{git_io(payload["issue"]["html_url"])}"
-        when pull_request
-          msg << "[#{payload["base"]["repo"]["full_name"]}] #{payload["head"]["user"]["login"]} #{payload["action"]} pull request #{payload["number"]}- #{git_io(payload["url"])}"
+        when "pull_request"
+          msg << "[#{payload["base"]["repo"]["full_name"]}] #{payload["head"]["user"]["login"]} #{payload["action"]} pull request #{payload["number"]} - #{git_io(payload["url"])}"
         else
           # TODO: commit_comment, pull_request_review_comment, gollum
           msg << "[Github PubSubHubbub hook] Unhandled event: #{request.env["HTTP_X_GITHUB_EVENT"]}"
