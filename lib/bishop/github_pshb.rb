@@ -39,6 +39,12 @@ module Bishop
           msg << "[#{payload["issue"]["html_url"].match(/^https:\/\/github.com\/(.+)\/issues/)[1]}] #{user} commented on issue: \"#{payload["issue"]["title"]}\" - #{git_io(payload["issue"]["html_url"])}"
         when "pull_request"
           msg << "[#{payload["base"]["repo"]["full_name"]}] #{payload["head"]["user"]["login"]} #{payload["action"]} pull request #{payload["number"]} - #{git_io(payload["url"])}"
+        when "gollum"
+          payload["pages"].each do |page|
+            repo_full_name = page["html_url"].match(/^https:\/\/github.com\/(.+)\/wiki/)[1]
+            diff_url = "https://github.com/#{}/wiki/_compare/#{page["sha"]}"
+            msg << "[#{repo_full_name}] someone updated wikipage: \"#{page["title"]}\" - #{git_io(page["html_url"])} (diff: #{git_io(diff_url)})"
+          end
         else
           # TODO: commit_comment, pull_request_review_comment, gollum
           msg << "[Github PubSubHubbub hook] Unhandled event: #{request.env["HTTP_X_GITHUB_EVENT"]}"
