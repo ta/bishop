@@ -42,7 +42,7 @@ module Bishop
         when "gollum"
           payload["pages"].each do |page|
             repo_full_name = page["html_url"].match(/^https:\/\/github.com\/(.+)\/wiki/)[1]
-            diff_url = "https://github.com/#{}/wiki/_compare/#{page["sha"]}"
+            diff_url = "https://github.com/#{repo_full_name}/wiki/_compare/#{page["sha"]}"
             msg << "[#{repo_full_name}] someone updated wikipage: \"#{page["title"]}\" - #{git_io(page["html_url"])} (diff: #{git_io(diff_url)})"
           end
         else
