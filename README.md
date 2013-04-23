@@ -111,6 +111,7 @@ Bishop supports [Github's PubSubHubbub Hooks](http://developer.github.com/v3/rep
     [22:00:56] -bishop- [<project>] <user> commented on issue "<topic>" - https://github.com/<user>/<project>/issues/<id>
     [22:00:56] -bishop- [<project>] <user> closed issue "<topic>" - https://github.com/<user>/<project>/issues/<id>
     [22:00:56] -bishop- [<project>] <user> created pull request <num> - https://github.com/<user>/<project>/pull/<id>
+    [22:00:56] -bishop- [<project>] someone updated wikipage "<page title>" - https://github.com/<user>/<project>/wiki/<page> (diff: https://github.com/<user>/<project>/wiki/_compare/<sha>)
 
 Use the following URL:
 
