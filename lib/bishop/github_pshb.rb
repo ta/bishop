@@ -29,7 +29,7 @@ module Bishop
         when "push"
           msg = []
           payload["commits"].each do |commit|
-            msg << "[#{payload["repository"]["owner"]["name"]}/#{payload["repository"]["name"]}] #{commit["author"]["username"]} pushed a commit with message: \"#{commit["message"]}\" - #{git_io(commit["url"])}"
+            msg << "[#{payload["repository"]["owner"]["name"]}/#{payload["repository"]["name"]}] #{commit["author"]["username"]} pushed a commit: \"#{commit["message"]}\" - #{git_io(commit["url"])}"
           end
         when "issues"
           nick = payload["issue"]["assignee"]["login"] if payload["issue"]["assignee"]
@@ -42,10 +42,11 @@ module Bishop
         when "pull_request"
           msg << "[#{payload["base"]["repo"]["full_name"]}] #{payload["head"]["user"]["login"]} #{payload["action"]} pull request #{payload["number"]} - #{git_io(payload["url"])}"
         when "gollum"
+          user = payload["sender"]["login"]
           payload["pages"].each do |page|
             repo_full_name = page["html_url"].match(/^https:\/\/github.com\/(.+)\/wiki/)[1]
             diff_url = "https://github.com/#{repo_full_name}/wiki/_compare/#{page["sha"]}"
-            msg << "[#{repo_full_name}] someone updated wikipage: \"#{page["title"]}\" - #{git_io(page["html_url"])} (diff: #{git_io(diff_url)})"
+            msg << "[#{repo_full_name}] #{user} #{page["action"]} wikipage: \"#{page["title"]}\" - #{git_io(page["html_url"])} (diff: #{git_io(diff_url)})"
           end
         else
           # TODO: commit_comment, pull_request_review_comment, gollum
