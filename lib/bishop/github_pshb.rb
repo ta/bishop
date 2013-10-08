@@ -19,7 +19,7 @@ module Bishop
       request.body.rewind
 
       if ENV["BISHOP_GITHUB_PSHB_CHANNELS"]
-        payload  = JSON.parse(URI.unescape(request.body.read))
+        payload  = JSON.parse(params["payload"])
         channels = ENV["BISHOP_GITHUB_PSHB_CHANNELS"].split(",")
         user     = false
         nick     = false
