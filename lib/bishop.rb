@@ -14,7 +14,7 @@ module Bishop
       halt 400, "Only HTTPS is allowed!" if !request.secure? && ENV["RACK_ENV"] == "production"
       # Dump request body for debugging purposes
       if ENV["DEBUG"]
-        STDERR.puts request.env["Content-Type"]
+        STDERR.puts request.env.inspect
         STDERR.puts request.body.read 
         request.body.rewind
       end
