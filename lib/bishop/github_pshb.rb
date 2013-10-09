@@ -17,7 +17,7 @@ module Bishop
     post "/#{ENV["BISHOP_API_KEY"]}" do
 
       if ENV["BISHOP_GITHUB_PSHB_CHANNELS"]
-        payload  = JSON.parse(params["payload"])
+        payload  = request.env["CONTENT_TYPE"] == "application/json" ? JSON.parse(request.body.read) : JSON.parse(params["payload"])
         channels = ENV["BISHOP_GITHUB_PSHB_CHANNELS"].split(",")
         user     = false
         nick     = false
