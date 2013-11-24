@@ -1,4 +1,5 @@
 # -*- mode: ruby; tab-width: 2; indent-tabs-mode: nil; -*-
+ruby "2.0.0"
 source "http://rubygems.org"
 
 gem "cinch"
