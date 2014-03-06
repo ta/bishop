@@ -25,27 +25,71 @@ module Bishop
 
         case request.env["HTTP_X_GITHUB_EVENT"]
         when "push"
-          msg = []
           payload["commits"].each do |commit|
-            msg << "[#{payload["repository"]["owner"]["name"]}/#{payload["repository"]["name"]}] #{commit["author"]["username"]} pushed a commit: \"#{commit["message"]}\" - #{git_io(commit["url"])}"
+            msg << sprintf("[%s/%s] %s pushed a commit: \"%s\" - %s", 
+              payload["repository"]["owner"]["name"],
+              payload["repository"]["name"],
+              commit["author"]["username"],
+              commit["message"],
+              git_io(commit["url"])
+            )
           end
+
         when "issues"
           nick = payload["issue"]["assignee"]["login"] if payload["issue"]["assignee"]
           user = payload["issue"]["user"]["login"]
-          msg << "[#{payload["issue"]["html_url"].match(/^https:\/\/github.com\/(.+)\/issues/)[1]}] #{user} #{payload["action"]} issue: \"#{payload["issue"]["title"]}\" - #{git_io(payload["issue"]["html_url"])}"
+          msg << sprintf("[%s] %s %s issue: \"%s\" - %s",
+            payload["issue"]["html_url"].match(/^https:\/\/github.com\/(.+)\/issues/)[1],
+            user,
+            payload["action"],
+            payload["issue"]["title"],
+            git_io(payload["issue"]["html_url"])
+          )
+
         when "issue_comment"
           nick = payload["issue"]["assignee"]["login"] if payload["issue"]["assignee"]
           user = payload["comment"]["user"]["login"]
-          msg << "[#{payload["issue"]["html_url"].match(/^https:\/\/github.com\/(.+)\/issues/)[1]}] #{user} commented on issue: \"#{payload["issue"]["title"]}\" - #{git_io(payload["issue"]["html_url"])}"
+          msg << sprintf("[%s] %s commented on issue: \"%s\" - %s",
+            payload["issue"]["html_url"].match(/^https:\/\/github.com\/(.+)\/issues/)[1],
+            user,
+            payload["issue"]["title"],
+            git_io(payload["issue"]["html_url"])
+          )
+
+        when "commit_comment"
+          user = payload["sender"]["login"]
+          msg << sprintf("[%s] %s commented on committed file: \"%s:%s\" - %s",
+            payload["repository"]["name"],
+            user,
+            payload["comment"]["path"],
+            payload["comment"]["line"],
+            git_io(payload["comment"]["html_url"])
+          )
+
         when "pull_request"
-          msg << "[#{payload["base"]["repo"]["full_name"]}] #{payload["head"]["user"]["login"]} #{payload["action"]} pull request #{payload["number"]} - #{git_io(payload["url"])}"
+          msg << sprintf("[%s] %s %s pull request %s - %s",
+            payload["base"]["repo"]["full_name"],
+            payload["head"]["user"]["login"],
+            payload["action"],
+            payload["number"],
+            git_io(payload["url"])
+          )
+
         when "gollum"
           user = payload["sender"]["login"]
           payload["pages"].each do |page|
             repo_full_name = page["html_url"].match(/^https:\/\/github.com\/(.+)\/wiki/)[1]
             diff_url = "https://github.com/#{repo_full_name}/wiki/_compare/#{page["sha"]}"
-            msg << "[#{repo_full_name}] #{user} #{page["action"]} wikipage: \"#{page["title"]}\" - #{git_io(page["html_url"])} (diff: #{git_io(diff_url)})"
+            msg << sprintf("[%s] %s %s wikipage: \"%s\" - %s (diff: %s)",
+              repo_full_name,
+              user,
+              page["action"],
+              page["title"],
+              git_io(page["html_url"]),
+              git_io(diff_url)
+            )
           end
+
         else
           # TODO: commit_comment, pull_request_review_comment, gollum
           msg << "[Github PubSubHubbub hook] Unhandled event: #{request.env["HTTP_X_GITHUB_EVENT"]}"
