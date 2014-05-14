@@ -37,7 +37,7 @@ module Bishop
 
         when "issues"
           nick = payload["issue"]["assignee"]["login"] if payload["issue"]["assignee"]
-          user = payload["issue"]["user"]["login"]
+          user = payload["sender"]["login"]
           msg << sprintf("[%s] %s %s issue: \"%s\" - %s",
             payload["issue"]["html_url"].match(/^https:\/\/github.com\/(.+)\/issues/)[1],
             user,
@@ -48,7 +48,7 @@ module Bishop
 
         when "issue_comment"
           nick = payload["issue"]["assignee"]["login"] if payload["issue"]["assignee"]
-          user = payload["comment"]["user"]["login"]
+          user = payload["sender"]["login"]
           msg << sprintf("[%s] %s commented on issue: \"%s\" - %s",
             payload["issue"]["html_url"].match(/^https:\/\/github.com\/(.+)\/issues/)[1],
             user,
