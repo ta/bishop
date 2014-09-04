@@ -20,7 +20,7 @@ module Bishop
           if (channels.index(channel))
             #response      = Net::HTTP.post_form(URI.parse("http://git.io/"), "url" => commit["url"])
             #commit["url"] = Net::HTTPSuccess === response  ? response["Location"] : commit["url"]
-            Bishop::Bot.instance.Channel(channel).safe_notice("[#{payload["project"]}] Build #{payload["commit_version"][0..9]} committet by #{payload["commit_author"]} #{payload["status"] ? "passed" : "failed"} at #{payload["built_at"]} - #{payload["url"]}")
+            Bishop::Bot.instance.Channel(channel).notice("[#{payload["project"]}] Build #{payload["commit_version"][0..9]} committet by #{payload["commit_author"]} #{payload["status"] ? "\x0309passed\x0F" : "\x0304failed\x0F"} at #{payload["built_at"]} - #{payload["url"]}")
           end
         end
       end
