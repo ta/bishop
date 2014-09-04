@@ -1,7 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    cinch (2.0.7)
+    cinch (2.1.0)
     dotenv (0.9.0)
     foreman (0.63.0)
       dotenv (>= 0.7)
