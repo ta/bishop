@@ -3,6 +3,10 @@ $LOAD_PATH.push File.realdirpath(File.dirname(__FILE__))
 require "bundler/setup"
 require "lib/bishop"
 
+Signal.trap("INT") do
+  Bishop::Bot.kill
+end
+
 # Configuration by environment variables
 # BISHOP_SERVER
 # BISHOP_CHANNELS

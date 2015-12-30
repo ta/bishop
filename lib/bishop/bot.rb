@@ -13,6 +13,8 @@ module Bishop
     @instance = nil
 
     class << self
+      attr_reader :instance, :pid
+
       def start
         return @instance if @instance
 
@@ -31,16 +33,6 @@ module Bishop
               c.plugins.prefix  = /^bishop[\:,] /
               c.plugins.plugins = [Commands, Greetings, Seen]
             end
-
-            Signal.trap("INT") do
-              bot.quit
-              DRb.stop_service
-            end
-
-            Signal.trap("TERM") do
-              bot.quit
-              DRb.stop_service
-            end
           end
 
           log = File.open("./tmp/bishop.log", "a")
@@ -57,11 +49,11 @@ module Bishop
       end
 
       def stop
-        puts "*** bishop is shutting down (PID #{Process.pid})"
-        @instance.quit "I'll go! Believe me, I'd prefer not to. I may be synthetic, but I'm not stupid"
-        @instance = nil
-        DRb.stop_service
-        Process.kill("INT", @pid)
+        @instance && @instance.quit("I'll go! Believe me, I'd prefer not to. I may be synthetic, but I'm not stupid")
+      end
+
+      def kill
+        Process.kill(9, @pid) if @pid
       end
     end
   end
