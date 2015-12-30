@@ -16,7 +16,7 @@ require "lib/bishop"
 # BISHOP_HEROKU_HOOK_CHANNELS
 # BISHOP_REDMINE_HOOK_CHANNELS
 
-Bishop::Bot.start if !!ENV["BISHOP_SERVER"] && !!ENV["BISHOP_CHANNELS"]
+Bishop::Bot.start if ENV.key?("BISHOP_SERVER")
 
 require "lib/bishop/simpleci_hook"
 map "/hooks/simpleci" do
